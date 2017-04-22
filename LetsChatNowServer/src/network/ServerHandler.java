@@ -3,6 +3,7 @@ package network;
 import com.google.gson.Gson;
 import data_model.Message;
 import user.ClientHandler;
+import view.LetsChatServerGui;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 public class ServerHandler {
     private static ServerHandler ourInstance = new ServerHandler();
+    private static LetsChatServerGui serverGui = LetsChatServerGui.getInstance();
 
     private String serverName;
     private int serverPort;
