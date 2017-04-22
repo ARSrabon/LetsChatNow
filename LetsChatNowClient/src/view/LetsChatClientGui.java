@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Vector;
 
 public class LetsChatClientGui extends JFrame {
 
@@ -19,14 +22,23 @@ public class LetsChatClientGui extends JFrame {
     private JTextArea chatMessageViewBox;
     private JTextField serverAddress;
     private JTextField serverPort;
-    JList<String> onlineUsers;
+    private JList onlineUsers;
+    private Vector<String> usersList = new Vector<>();
+    private Vector<String> activeUser = new Vector<>();
     private JTextField txtWriteMessage;
+    private JLabel lblUserName;
 
     private LetsChatClientGui() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Lets Chat Now!!!");
         setSize(450, 600);
         setResizable(false);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         getContentPane().setLayout(new BorderLayout(0, 0));
 
         JPanel mainPanel = new JPanel();
@@ -38,6 +50,8 @@ public class LetsChatClientGui extends JFrame {
         mainPanel.add(lblNewLabel);
 
         serverAddress = new JTextField();
+        serverAddress.setText("192.168.0.2");
+        serverAddress.setToolTipText("Enter LetsChatNow Server Address.");
         mainPanel.add(serverAddress);
         serverAddress.setColumns(10);
 
@@ -45,6 +59,8 @@ public class LetsChatClientGui extends JFrame {
         mainPanel.add(lblNewLabel_1);
 
         serverPort = new JTextField();
+        serverPort.setText("9000");
+        serverPort.setToolTipText("Enter LetsChatNow Server Port to connect.");
         mainPanel.add(serverPort);
         serverPort.setColumns(10);
 
@@ -53,17 +69,25 @@ public class LetsChatClientGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = JOptionPane.showInputDialog("Enter your Username:");
                 LetsChatClientGui.getInstance().updateUsername(username);
-                JOptionPane.showMessageDialog(null, "Your username: " + username);
-
+                clientHandler.initClient(serverAddress.getText(),Integer.parseInt(serverPort.getText()),username);
+                clientHandler.connectToChatServer();
                 btnConnectToServer.setEnabled(false);
             }
         });
 
-        JLabel lblUserName = new JLabel("Username: cyborn13x");
+
+        lblUserName = new JLabel("Username: cyborn13x");
         mainPanel.add(lblUserName);
         mainPanel.add(btnConnectToServer);
 
         JButton btnDisConnectFromServer = new JButton("Disconnect");
+        btnDisConnectFromServer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clientHandler.stopClient();
+                dispose();
+            }
+        });
         mainPanel.add(btnDisConnectFromServer);
 
         JPanel userOnline = new JPanel();
@@ -71,7 +95,7 @@ public class LetsChatClientGui extends JFrame {
         getContentPane().add(userOnline, BorderLayout.WEST);
         userOnline.setLayout(new GridLayout(3, 0, 0, 0));
 
-        onlineUsers = new JList<>();
+        onlineUsers = new JList(this.getUsersList());
 
         JScrollPane onlineUsersList = new JScrollPane(onlineUsers);
         onlineUsersList.setBorder(BorderFactory.createTitledBorder("Online Users"));
@@ -118,15 +142,61 @@ public class LetsChatClientGui extends JFrame {
         JButton btnSendMessage = new JButton("Send");
         panel.add(btnSendMessage);
 
+        getWindows()[0].addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                clientHandler.stopClient();
+                super.windowClosing(e);
+            }
+        });
         show();
     }
 
     public void updateUsername(String username) {
-
+        lblUserName.setText("Username: " + username);
     }
 
     public void updateMessageView(String str) {
-        LetsChatClientGui.getInstance().chatMessageViewBox.append(str);
+        LetsChatClientGui.getInstance().chatMessageViewBox.append(str + "\n");
     }
 
+    public String getUsername(String s) {
+        return JOptionPane.showInputDialog(s);
+    }
+
+    public void showMessage(String message, String title, int i){
+        if (i != 0){
+            JOptionPane.showMessageDialog(null,message,title,JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public JList getOnlineUsers() {
+        return onlineUsers;
+    }
+
+    public void setOnlineUsers(JList onlineUsers) {
+        this.onlineUsers = onlineUsers;
+    }
+
+    public Vector<String> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(Vector<String> usersList) {
+        this.usersList = usersList;
+    }
+
+    public Vector<String> getActiveUser() {
+        return activeUser;
+    }
+
+    public void setActiveUser(Vector<String> activeUser) {
+        this.activeUser = activeUser;
+    }
+
+    public void updateOnlineUsers(Vector<String> userList) {
+        LetsChatClientGui.getInstance().getOnlineUsers().setListData(userList);
+        LetsChatClientGui.getInstance().show();
+        System.out.println("Here !!!");
+    }
 }

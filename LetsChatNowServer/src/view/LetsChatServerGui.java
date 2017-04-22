@@ -6,12 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LetsChatServerGui extends JFrame {
 
     private static LetsChatServerGui instance = new LetsChatServerGui();
     private static ServerHandler serverHandler = ServerHandler.getInstance();
+    private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("hh:mm:ss");
 
     public static LetsChatServerGui getInstance() {
         return instance;
@@ -19,12 +25,19 @@ public class LetsChatServerGui extends JFrame {
 
     private JTextField serverPort;
     private JLabel lblServerName;
+    private JTextArea console;
 
     private LetsChatServerGui() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("LetsChatNow Server");
-        setSize(new Dimension(350, 400));
+        setSize(new Dimension(560, 400));
         setResizable(false);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         getContentPane().setLayout(new BorderLayout(0, 0));
 
         JPanel panel = new JPanel();
@@ -32,24 +45,45 @@ public class LetsChatServerGui extends JFrame {
         getContentPane().add(panel, BorderLayout.NORTH);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-        JLabel lblServerInfo = new JLabel("Address: " + " " + " Port:");
+        JLabel lblServerInfo = null;
+        try {
+            lblServerInfo = new JLabel("Address: " + Inet4Address.getLocalHost().getHostAddress() + " Port:");
+        } catch (UnknownHostException e) {
+
+        }
         panel.add(lblServerInfo);
 
-        serverPort = new JFormattedTextField(NumberFormat.getNumberInstance());
+        serverPort = new JFormattedTextField();
+        serverPort.setText("9000");
         panel.add(serverPort);
         serverPort.setColumns(10);
 
         JButton btnStartServer = new JButton("Start Server");
         btnStartServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                String serverName = JOptionPane.showInputDialog(null);
-//                LetsChatServerGui.getInstance().updateServerName(serverName);
-                if (!serverPort.getText().toString().equals("")) JOptionPane.showMessageDialog(null,serverPort.getText());
+                if (serverPort.getText().equals(null)){
+                    JOptionPane.showMessageDialog(null,"Error: Please Insert a Port number.");
+                }else {
+                    int port = Integer.parseInt(serverPort.getText());
+                    String serverName = JOptionPane.showInputDialog("Enter LetsChatNow Server Name");
+                    LetsChatServerGui.getInstance().updateServerName(serverName);
+                    serverHandler.initChatServer(port,serverName);
+                    serverHandler.startChatServer();
+                    serverPort.setEnabled(false);
+                    btnStartServer.setEnabled(false);
+                }
             }
         });
         panel.add(btnStartServer);
 
         JButton btnStopServer = new JButton("Stop Server");
+        btnStopServer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                serverHandler.stopServer();
+                dispose();
+            }
+        });
         panel.add(btnStopServer);
 
         JPanel panel_1 = new JPanel();
@@ -80,7 +114,8 @@ public class LetsChatServerGui extends JFrame {
         scrollPane_1.setBorder(BorderFactory.createTitledBorder("Console"));
         panel_2.add(scrollPane_1);
 
-        JTextArea console = new JTextArea();
+
+        console = new JTextArea();
         console.setEditable(false);
         console.setWrapStyleWord(true);
         console.setLineWrap(true);
@@ -103,11 +138,23 @@ public class LetsChatServerGui extends JFrame {
         });
         commonPanel.add(btnBroadcast);
 
+        getWindows()[0].addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                serverHandler.stopServer();
+                super.windowClosing(e);
+            }
+        });
+
         show();
     }
 
     public void updateServerName(String sname) {
         LetsChatServerGui.getInstance().lblServerName.setText("Server Name: " + sname);
+    }
+
+    public void updateConsole(String message){
+        this.console.append(DATE_FORMAT.format(new Date()) + " -> " + message + " \n");
     }
 
 }

@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Created by msrabon on 4/14/17.
@@ -54,10 +55,10 @@ public class ServerHandler {
     public void startChatServer() {
         try {
             this.myChatServer = new ServerSocket(serverPort);
-            System.out.println("Server started successfully !!!");
-            System.out.println(serverName + "'s LetsChatNow Server is ready to receive clients.");
+            serverGui.updateConsole("Server started successfully !!!");
+            serverGui.updateConsole(serverName + "'s LetsChatNow Server is ready to receive clients.");
         } catch (IOException e) {
-            System.out.println("An error occurred while starting the LetsChatNow Server" +
+            serverGui.updateConsole("An error occurred while starting the LetsChatNow Server" +
                     "\nPlease check if the port: " + serverPort + " is taken by or not.");
             e.printStackTrace();
             return;
@@ -79,7 +80,7 @@ public class ServerHandler {
                                         Message message = gson.fromJson(clientHandler.getDataIn().readUTF(), Message.class);
                                         ServerHandler.getInstance().decisionMaker(clientHandler, message);
                                     } catch (IOException e) {
-                                        e.printStackTrace();
+//                                        e.printStackTrace();
                                         error = true;
                                         return;
                                     }
@@ -108,14 +109,40 @@ public class ServerHandler {
                 break;
 
             case 300: // get list of online users.
-                String str = gson.toJson(ServerHandler.getInstance().getClientHandlerMap().keySet());
-                System.out.println(str);
-                clientHandler.getDataOut().writeUTF(gson.toJson(new Message(serverName, clientHandler.getUserName(), 300, 0, str)));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean error = false;
+                        while (!error) {
+                            String str = gson.toJson(new Vector<String>(ServerHandler.getInstance().getClientHandlerMap().keySet()));
+                            serverGui.updateConsole(str);
+                            try {
+                                clientHandler.getDataOut().writeUTF(gson.toJson(new Message(serverName, clientHandler.getUserName(), 300, 0, str)));
+                                Thread.sleep(1000);
+                            } catch (IOException e) {
+                                error = true;
+//                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                error = true;
+//                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
                 break;
 
             default:
                 break;
 
+        }
+    }
+
+    public void stopServer() {
+        this.acceptClient = false;
+        try {
+            this.myChatServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -127,7 +154,7 @@ public class ServerHandler {
         }
         clientHandler.setUserName(message.getSender());
         clientHandlerMap.put(message.getSender(), clientHandler);
-        System.out.println(message.getSender() + " is online now.");
+        serverGui.updateConsole(message.getSender() + " is online now.");
         return true;
     }
 }
