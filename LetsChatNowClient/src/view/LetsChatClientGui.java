@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.Vector;
 
 public class LetsChatClientGui extends JFrame {
@@ -26,6 +27,7 @@ public class LetsChatClientGui extends JFrame {
     private Vector<String> activeUser = new Vector<>();
     private JTextField txtWriteMessage;
     private JLabel lblUserName;
+    private JButton btnStartChat;
 
     private LetsChatClientGui() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -112,10 +114,16 @@ public class LetsChatClientGui extends JFrame {
         JPanel btnHolder = new JPanel();
         userOnline.add(btnHolder);
 
-        JButton btnStartChat = new JButton("Start Chat");
+
+        btnStartChat = new JButton("Start Chat");
         btnStartChat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                String targetUser = String.valueOf(onlineUsers.getSelectedValue());
+                try {
+                    ClientHandler.getInstance().startChat(targetUser);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         btnHolder.add(btnStartChat);
@@ -166,10 +174,8 @@ public class LetsChatClientGui extends JFrame {
         return JOptionPane.showInputDialog(s);
     }
 
-    public void showMessage(String message, String title, int i){
-        if (i != 0){
-            JOptionPane.showMessageDialog(null,message,title,JOptionPane.INFORMATION_MESSAGE);
-        }
+    public void showMessage(String message, String title){
+        JOptionPane.showMessageDialog(null,message,title,JOptionPane.INFORMATION_MESSAGE);
     }
 
     public JList getOnlineUsers() {
@@ -192,6 +198,10 @@ public class LetsChatClientGui extends JFrame {
         return activeUser;
     }
 
+    public JButton getBtnStartChat() {
+        return btnStartChat;
+    }
+
     public void setActiveUser(Vector<String> activeUser) {
         this.activeUser = activeUser;
     }
@@ -201,5 +211,20 @@ public class LetsChatClientGui extends JFrame {
 //        LetsChatClientGui.getInstance().show();
 //        System.out.println("Here !!!");
         LetsChatClientGui.getInstance().revalidate();
+    }
+
+    public boolean warnning(String s) {
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        int response = JOptionPane.showConfirmDialog(null, s, "Confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null,"No button clicked");
+        } else if (response == JOptionPane.YES_OPTION) {
+            return true;
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            return false;
+        }
+
+        return false;
     }
 }

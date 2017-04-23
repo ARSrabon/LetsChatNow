@@ -84,15 +84,31 @@ public class ClientHandler {
             case 110:
                 ClientHandler.getInstance().setClientUserName(message.getReceiver());
                 ClientHandler.getInstance().setChatServerName(message.getSender());
-                LetsChatClientGui.getInstance().showMessage(message.getPayLoad(), "Welcome", 1);
+                LetsChatClientGui.getInstance().showMessage(message.getPayLoad(), "Welcome");
                 LetsChatClientGui.getInstance().updateUsername(ClientHandler.getInstance().getClientUserName());
                 getOnlineUserList(dataIn, dataOut);
                 break;
 
             case 200: // start Chat
+                if (message.getChatType() == 0) {
 
+                } else if (message.getChatType() == 1) {
+                    if (LetsChatClientGui.getInstance().warnning(message.getSender() + " wants to chat with you.")) {
+                        dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 201, 1, "")));
+                    } else {
+                        dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 202, 1, "")));
+                    }
+                }
                 break;
             case 201:
+                JOptionPane.showMessageDialog(null, message.getSender() + " has accepted your chat request.");
+                LetsChatClientGui.getInstance().updateMessageView(message.getSender() + " is Available now.");
+                break;
+            case 202:
+                JOptionPane.showMessageDialog(null, "Sorry," + message.getSender() + " is busy right now.");
+                LetsChatClientGui.getInstance().updateMessageView(message.getSender() + " is busy.");
+                break;
+            case 210:
                 break;
             case 300: // get Online users list.
                 new Thread(new Runnable() {
@@ -102,12 +118,12 @@ public class ClientHandler {
                         for (String s : userList) {
                             System.out.println(s);
                         }
+                        userList.remove(clientUserName);
                         LetsChatClientGui.getInstance().setUsersList(userList);
                         LetsChatClientGui.getInstance().updateOnlineUsers(userList);
                         LetsChatClientGui.getInstance().updateMessageView(String.valueOf(userList));
                     }
                 }).start();
-//                LetsChatClientGui.getInstance().showMessage(String.valueOf(userList), "userlist", 1);
                 break;
 
             default:
@@ -205,12 +221,16 @@ public class ClientHandler {
     public void stopClient() {
         try {
             error = true;
-            if (ClientHandler.getInstance().getChatServer().isConnected()){
+            if (ClientHandler.getInstance().getChatServer().isConnected()) {
                 ClientHandler.getInstance().getChatServer().close();
             }
             System.exit(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void startChat(String targetUser) throws IOException {
+        dataOut.writeUTF(gson.toJson(new Message(clientUserName, targetUser, 200, 1, "")));
     }
 }

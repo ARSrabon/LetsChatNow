@@ -91,7 +91,7 @@ public class ServerHandler {
                         } catch (Exception e) {
 
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }
@@ -106,17 +106,36 @@ public class ServerHandler {
                 if (checkUsername(clientHandler, message)) {
                     //Sending Confirmation message.
                     // Code : 200 means Ok/Ready
-                    clientHandler.getDataOut().writeUTF(gson.toJson(new Message(serverName, clientHandler.getUserName(), 110, 0,
+                    clientHandler.getDataOut().writeUTF(gson.toJson(new Message(serverName, clientHandler.getUserName(),
+                            110, 0,
                             "Welcome to " + serverName + "'s LetsChat Server,\nyou are ready to chat now.")));
                 }
                 break;
-
+            case 200:
+                if (message.getChatType() == 0) {
+                    LetsChatServerGui.getInstance().updateConsole("\n" + message.getSender() + ": " + message.getPayLoad());
+                } else if (message.getChatType() == 1) {
+                    ClientHandler handler = clientHandlerMap.get(message.getReceiver());
+                    handler.getDataOut().writeUTF(gson.toJson(new Message(message.getSender(), message.getReceiver(),
+                            200, 1, message.getPayLoad())));
+                }
+                break;
+            case 201:
+                break;
+            case 202:
+                break;
             case 300: // get list of online users.
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         boolean error = false;
                         while (!error) {
+//                            for (String s : ServerHandler.getInstance().getClientHandlerMap().keySet()){
+                            //i wanted to delete closed connections.But it did not work and i don't have to do workaround here.
+//                                if (!ServerHandler.getInstance().getClientHandlerMap().get(s).getClient().isConnected()){
+//                                    ServerHandler.getInstance().getClientHandlerMap().remove(s);
+//                                }
+//                            }
                             Vector vector = new Vector(ServerHandler.getInstance().getClientHandlerMap().keySet());
                             String str = gson.toJson(vector);
                             LetsChatServerGui.getInstance().updateConsole(str);
