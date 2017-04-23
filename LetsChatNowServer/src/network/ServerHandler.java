@@ -121,8 +121,31 @@ public class ServerHandler {
                 }
                 break;
             case 201:
+                if (message.getChatType() == 0) {
+                    LetsChatServerGui.getInstance().updateConsole("\n" + message.getSender() + ": " + message.getPayLoad());
+                } else if (message.getChatType() == 1) {
+                    ClientHandler handler = clientHandlerMap.get(message.getReceiver());
+                    handler.getDataOut().writeUTF(gson.toJson(new Message(message.getSender(), message.getReceiver(),
+                            201, 1, message.getPayLoad())));
+                }
                 break;
             case 202:
+                if (message.getChatType() == 0) {
+                    LetsChatServerGui.getInstance().updateConsole("\n" + message.getSender() + ": " + message.getPayLoad());
+                } else if (message.getChatType() == 1) {
+                    ClientHandler handler = clientHandlerMap.get(message.getReceiver());
+                    handler.getDataOut().writeUTF(gson.toJson(new Message(message.getSender(), message.getReceiver(),
+                            202, 1, message.getPayLoad())));
+                }
+                break;
+            case 210:
+                if (message.getChatType() == 0) {
+                    LetsChatServerGui.getInstance().updateConsole("\n" + message.getSender() + ": " + message.getPayLoad());
+                } else if (message.getChatType() == 1) {
+                    ClientHandler handler = clientHandlerMap.get(message.getReceiver());
+                    handler.getDataOut().writeUTF(gson.toJson(new Message(message.getSender(), message.getReceiver(),
+                            210, 1, message.getPayLoad())));
+                }
                 break;
             case 300: // get list of online users.
                 new Thread(new Runnable() {
@@ -138,7 +161,7 @@ public class ServerHandler {
 //                            }
                             Vector vector = new Vector(ServerHandler.getInstance().getClientHandlerMap().keySet());
                             String str = gson.toJson(vector);
-                            LetsChatServerGui.getInstance().updateConsole(str);
+//                            LetsChatServerGui.getInstance().updateConsole(str);
                             LetsChatServerGui.getInstance().updateOnlineUsersList(vector);
                             try {
                                 clientHandler.getDataOut().writeUTF(gson.toJson(new Message(serverName, clientHandler.getUserName(), 300, 0, str)));

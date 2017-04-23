@@ -9,11 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 public class LetsChatClientGui extends JFrame {
 
     private static LetsChatClientGui instance = new LetsChatClientGui();
+    private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("hh:mm:ss");
 
     public static LetsChatClientGui getInstance() {
         return instance;
@@ -23,6 +26,7 @@ public class LetsChatClientGui extends JFrame {
     private JTextField serverAddress;
     private JTextField serverPort;
     private JList onlineUsers;
+    private JList activeChats;
     private Vector<String> usersList = new Vector<>();
     private Vector<String> activeUser = new Vector<>();
     private JTextField txtWriteMessage;
@@ -108,7 +112,8 @@ public class LetsChatClientGui extends JFrame {
         activeChat.setBorder(BorderFactory.createTitledBorder("Active Chats"));
         userOnline.add(activeChat);
 
-        JList activeChats = new JList();
+
+        activeChats = new JList();
         activeChat.setViewportView(activeChats);
 
         JPanel btnHolder = new JPanel();
@@ -149,6 +154,21 @@ public class LetsChatClientGui extends JFrame {
         txtWriteMessage.setColumns(10);
 
         JButton btnSendMessage = new JButton("Send");
+        btnSendMessage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!txtWriteMessage.getText().equals(null)){
+                    try {
+                        String msg = txtWriteMessage.getText();
+                        ClientHandler.getInstance().sendMessage(msg);
+                        LetsChatClientGui.getInstance().updateMessageView(ClientHandler.getInstance().getClientUserName()+": " + msg);
+                        txtWriteMessage.setText("");
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(null,e1);
+                    }
+                }
+            }
+        });
         panel.add(btnSendMessage);
 
         getWindows()[0].addWindowListener(new WindowAdapter() {
@@ -167,7 +187,7 @@ public class LetsChatClientGui extends JFrame {
     }
 
     public void updateMessageView(String str) {
-        LetsChatClientGui.getInstance().chatMessageViewBox.append(str + "\n");
+        LetsChatClientGui.getInstance().chatMessageViewBox.append(DATE_FORMAT.format(new Date()) + " -> " + str + "\n");
     }
 
     public String getUsername(String s) {
@@ -206,10 +226,22 @@ public class LetsChatClientGui extends JFrame {
         this.activeUser = activeUser;
     }
 
+    public JList getActiveChats() {
+        return activeChats;
+    }
+
+    public void setActiveChats(JList activeChats) {
+        this.activeChats = activeChats;
+    }
+
     public void updateOnlineUsers(Vector<String> userList) {
         LetsChatClientGui.getInstance().getOnlineUsers().setListData(userList);
 //        LetsChatClientGui.getInstance().show();
 //        System.out.println("Here !!!");
+        LetsChatClientGui.getInstance().revalidate();
+    }
+    public void updateActiveChat(Vector<String> userList) {
+        LetsChatClientGui.getInstance().getActiveChats().setListData(userList);
         LetsChatClientGui.getInstance().revalidate();
     }
 
