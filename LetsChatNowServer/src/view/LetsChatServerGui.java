@@ -12,11 +12,12 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 
 public class LetsChatServerGui extends JFrame {
 
     private static LetsChatServerGui instance = new LetsChatServerGui();
-    private static ServerHandler serverHandler = ServerHandler.getInstance();
+    private ServerHandler serverHandler = ServerHandler.getInstance();
     private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("hh:mm:ss");
 
     public static LetsChatServerGui getInstance() {
@@ -26,6 +27,9 @@ public class LetsChatServerGui extends JFrame {
     private JTextField serverPort;
     private JLabel lblServerName;
     private JTextArea console;
+    private JList onlineUsers;
+
+    private Vector usersOnline;
 
     private LetsChatServerGui() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -101,7 +105,8 @@ public class LetsChatServerGui extends JFrame {
         scrollPane.setBorder(BorderFactory.createTitledBorder("Online Users"));
         usersList.add(scrollPane);
 
-        JList onlineUsers = new JList();
+
+        onlineUsers = new JList();
         onlineUsers.setValueIsAdjusting(true);
         scrollPane.setViewportView(onlineUsers);
 
@@ -147,6 +152,26 @@ public class LetsChatServerGui extends JFrame {
         });
 
         show();
+    }
+
+    public JList getOnlineUsers() {
+        return onlineUsers;
+    }
+
+    public void setOnlineUsers(JList onlineUsers) {
+        this.onlineUsers = onlineUsers;
+    }
+
+    public Vector getUsersOnline() {
+        return usersOnline;
+    }
+
+    public void setUsersOnline(Vector usersOnline) {
+        this.usersOnline = usersOnline;
+    }
+
+    public void updateOnlineUsersList(Vector list){
+        LetsChatServerGui.getInstance().getOnlineUsers().setListData(list);
     }
 
     public void updateServerName(String sname) {

@@ -10,6 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.server.ExportException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -19,7 +20,6 @@ import java.util.Vector;
  */
 public class ServerHandler {
     private static ServerHandler ourInstance = new ServerHandler();
-    private static LetsChatServerGui serverGui = LetsChatServerGui.getInstance();
 
     private String serverName;
     private int serverPort;
@@ -55,10 +55,10 @@ public class ServerHandler {
     public void startChatServer() {
         try {
             this.myChatServer = new ServerSocket(serverPort);
-            serverGui.updateConsole("Server started successfully !!!");
-            serverGui.updateConsole(serverName + "'s LetsChatNow Server is ready to receive clients.");
+            LetsChatServerGui.getInstance().updateConsole("Server started successfully !!!");
+            LetsChatServerGui.getInstance().updateConsole(serverName + "'s LetsChatNow Server is ready to receive clients.");
         } catch (IOException e) {
-            serverGui.updateConsole("An error occurred while starting the LetsChatNow Server" +
+            LetsChatServerGui.getInstance().updateConsole("An error occurred while starting the LetsChatNow Server" +
                     "\nPlease check if the port: " + serverPort + " is taken by or not.");
             e.printStackTrace();
             return;
@@ -69,27 +69,30 @@ public class ServerHandler {
             public void run() {
                 while (acceptClient) {
                     try {
-                        Socket client = myChatServer.accept();
-                        ClientHandler clientHandler = new ClientHandler(client);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                boolean error = false;
-                                while (!error && clientHandler.getClient().isConnected()) {
-                                    try {
-                                        Message message = gson.fromJson(clientHandler.getDataIn().readUTF(), Message.class);
-                                        ServerHandler.getInstance().decisionMaker(clientHandler, message);
-                                    } catch (IOException e) {
+                        try {
+                            Socket client = myChatServer.accept();
+                            ClientHandler clientHandler = new ClientHandler(client);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boolean error = false;
+                                    while (!error && clientHandler.getClient().isConnected()) {
+                                        try {
+                                            Message message = gson.fromJson(clientHandler.getDataIn().readUTF(), Message.class);
+                                            ServerHandler.getInstance().decisionMaker(clientHandler, message);
+                                        } catch (IOException e) {
 //                                        e.printStackTrace();
-                                        error = true;
-                                        return;
+                                            error = true;
+                                            return;
+                                        }
                                     }
                                 }
-                            }
-                        }).start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return;
+                            }).start();
+                        } catch (Exception e) {
+
+                        }
+                    }catch (Exception e){
+
                     }
                 }
             }
@@ -114,11 +117,13 @@ public class ServerHandler {
                     public void run() {
                         boolean error = false;
                         while (!error) {
-                            String str = gson.toJson(new Vector<String>(ServerHandler.getInstance().getClientHandlerMap().keySet()));
-                            serverGui.updateConsole(str);
+                            Vector vector = new Vector(ServerHandler.getInstance().getClientHandlerMap().keySet());
+                            String str = gson.toJson(vector);
+                            LetsChatServerGui.getInstance().updateConsole(str);
+                            LetsChatServerGui.getInstance().updateOnlineUsersList(vector);
                             try {
                                 clientHandler.getDataOut().writeUTF(gson.toJson(new Message(serverName, clientHandler.getUserName(), 300, 0, str)));
-                                Thread.sleep(1000);
+                                Thread.sleep(10000);
                             } catch (IOException e) {
                                 error = true;
 //                                e.printStackTrace();
@@ -154,7 +159,7 @@ public class ServerHandler {
         }
         clientHandler.setUserName(message.getSender());
         clientHandlerMap.put(message.getSender(), clientHandler);
-        serverGui.updateConsole(message.getSender() + " is online now.");
+        LetsChatServerGui.getInstance().updateConsole(message.getSender() + " is online now.");
         return true;
     }
 }

@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class ClientHandler {
     private static ClientHandler ourInstance = new ClientHandler();
-    private static LetsChatClientGui clientGui = LetsChatClientGui.getInstance();
 
     private Socket chatServer;
     private String serverAddress;
@@ -53,16 +52,21 @@ public class ClientHandler {
             e.printStackTrace();
         }
 
-        Message message;
-        while (chatServer.isConnected() && !error) {
-            try {
-                message = gson.fromJson(dataIn.readUTF(), Message.class);
-                decisionMaker(message);
-            } catch (IOException e) {
-                error = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message message;
+                while (chatServer.isConnected() && !error) {
+                    try {
+                        message = gson.fromJson(dataIn.readUTF(), Message.class);
+                        decisionMaker(message);
+                    } catch (IOException e) {
+                        error = true;
 //                e.printStackTrace();
+                    }
+                }
             }
-        }
+        }).start();
     }
 
     private void decisionMaker(Message message) throws IOException {
@@ -80,8 +84,8 @@ public class ClientHandler {
             case 110:
                 ClientHandler.getInstance().setClientUserName(message.getReceiver());
                 ClientHandler.getInstance().setChatServerName(message.getSender());
-                clientGui.showMessage(message.getPayLoad(), "Welcome", 1);
-                clientGui.updateUsername(ClientHandler.getInstance().getClientUserName());
+                LetsChatClientGui.getInstance().showMessage(message.getPayLoad(), "Welcome", 1);
+                LetsChatClientGui.getInstance().updateUsername(ClientHandler.getInstance().getClientUserName());
                 getOnlineUserList(dataIn, dataOut);
                 break;
 
@@ -91,14 +95,19 @@ public class ClientHandler {
             case 201:
                 break;
             case 300: // get Online users list.
-                Vector<String> userList = gson.fromJson(message.getPayLoad(), Vector.class);
-                for (String s : userList){
-                    System.out.println(s);
-                }
-                clientGui.setUsersList(userList);
-                clientGui.updateOnlineUsers(userList);
-//                clientGui.updateMessageView(String.valueOf(userList));
-//                clientGui.showMessage(String.valueOf(userList),"userlist",1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Vector<String> userList = gson.fromJson(message.getPayLoad(), Vector.class);
+                        for (String s : userList) {
+                            System.out.println(s);
+                        }
+                        LetsChatClientGui.getInstance().setUsersList(userList);
+                        LetsChatClientGui.getInstance().updateOnlineUsers(userList);
+                        LetsChatClientGui.getInstance().updateMessageView(String.valueOf(userList));
+                    }
+                }).start();
+//                LetsChatClientGui.getInstance().showMessage(String.valueOf(userList), "userlist", 1);
                 break;
 
             default:
@@ -115,14 +124,14 @@ public class ClientHandler {
     private boolean createUserInServer(Message message, DataInputStream dataIn, DataOutputStream dataOut) throws IOException {
         System.out.println("OpCode: " + message.getOpCode());
         if (message.getOpCode() == 101) {
-            String str = clientGui.getUsername("Same Username exists in the chat server.\nTo Proceed ,Please enter a new Username: ");
+            String str = LetsChatClientGui.getInstance().getUsername("Same Username exists in the chat server.\nTo Proceed ,Please enter a new Username: ");
             dataOut.writeUTF(gson.toJson(new Message(str, message.getSender(), 100, 0, "")));
             return createUserInServer(gson.fromJson(dataIn.readUTF(), Message.class), dataIn, dataOut);
         } else if (message.getOpCode() == 110) {
             ClientHandler.getInstance().setClientUserName(message.getReceiver());
             ClientHandler.getInstance().setChatServerName(message.getSender());
-            clientGui.updateMessageView(message.getPayLoad());
-            clientGui.updateUsername(ClientHandler.getInstance().getClientUserName());
+            LetsChatClientGui.getInstance().updateMessageView(message.getPayLoad());
+            LetsChatClientGui.getInstance().updateUsername(ClientHandler.getInstance().getClientUserName());
             return true;
         }
         return false;
@@ -192,10 +201,14 @@ public class ClientHandler {
         this.chatServerName = chatServerName;
     }
 
+
     public void stopClient() {
         try {
             error = true;
-            this.chatServer.close();
+            if (ClientHandler.getInstance().getChatServer().isConnected()){
+                ClientHandler.getInstance().getChatServer().close();
+            }
+            System.exit(1);
         } catch (IOException e) {
             e.printStackTrace();
         }

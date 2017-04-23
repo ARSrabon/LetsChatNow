@@ -13,7 +13,6 @@ import java.util.Vector;
 public class LetsChatClientGui extends JFrame {
 
     private static LetsChatClientGui instance = new LetsChatClientGui();
-    private static ClientHandler clientHandler = ClientHandler.getInstance();
 
     public static LetsChatClientGui getInstance() {
         return instance;
@@ -69,8 +68,10 @@ public class LetsChatClientGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = JOptionPane.showInputDialog("Enter your Username:");
                 LetsChatClientGui.getInstance().updateUsername(username);
-                clientHandler.initClient(serverAddress.getText(),Integer.parseInt(serverPort.getText()),username);
-                clientHandler.connectToChatServer();
+                ClientHandler.getInstance().initClient(serverAddress.getText(),Integer.parseInt(serverPort.getText()),username);
+                ClientHandler.getInstance().connectToChatServer();
+                serverAddress.setEnabled(false);
+                serverPort.setEnabled(false);
                 btnConnectToServer.setEnabled(false);
             }
         });
@@ -84,7 +85,7 @@ public class LetsChatClientGui extends JFrame {
         btnDisConnectFromServer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clientHandler.stopClient();
+                ClientHandler.getInstance().stopClient();
                 dispose();
             }
         });
@@ -145,8 +146,9 @@ public class LetsChatClientGui extends JFrame {
         getWindows()[0].addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                clientHandler.stopClient();
+                ClientHandler.getInstance().stopClient();
                 super.windowClosing(e);
+                dispose();
             }
         });
         show();
@@ -196,7 +198,8 @@ public class LetsChatClientGui extends JFrame {
 
     public void updateOnlineUsers(Vector<String> userList) {
         LetsChatClientGui.getInstance().getOnlineUsers().setListData(userList);
-        LetsChatClientGui.getInstance().show();
-        System.out.println("Here !!!");
+//        LetsChatClientGui.getInstance().show();
+//        System.out.println("Here !!!");
+        LetsChatClientGui.getInstance().revalidate();
     }
 }
