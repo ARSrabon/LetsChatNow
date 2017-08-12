@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LetsChatNowServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LetsChatNowServer_jar</output-path>
+    <root id="archive" name="LetsChatNowServer.jar">
+      <element id="module-output" name="LetsChatNowServer" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/gson-2.8.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

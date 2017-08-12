@@ -44,8 +44,8 @@ public class LetsChatClientGui extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getContentPane().setLayout(new BorderLayout(0, 0));
 
+        getContentPane().setLayout(new BorderLayout(0, 0));
         JPanel mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(0, 75));
         getContentPane().add(mainPanel, BorderLayout.NORTH);
@@ -76,9 +76,11 @@ public class LetsChatClientGui extends JFrame {
                 LetsChatClientGui.getInstance().updateUsername(username);
                 ClientHandler.getInstance().initClient(serverAddress.getText(),Integer.parseInt(serverPort.getText()),username);
                 ClientHandler.getInstance().connectToChatServer();
-                serverAddress.setEnabled(false);
-                serverPort.setEnabled(false);
-                btnConnectToServer.setEnabled(false);
+                if(ClientHandler.getInstance().getChatServer().isConnected()){
+                    serverAddress.setEnabled(false);
+                    serverPort.setEnabled(false);
+                    btnConnectToServer.setEnabled(false);
+                }
             }
         });
 
