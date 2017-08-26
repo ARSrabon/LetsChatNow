@@ -27,6 +27,7 @@ public class ClientHandler {
     private DataInputStream dataIn;
     private DataOutputStream dataOut;
     private boolean error;
+    private boolean flag_busy;
 
     public static ClientHandler getInstance() {
         return ourInstance;
@@ -49,6 +50,7 @@ public class ClientHandler {
             this.dataIn = new DataInputStream(chatServer.getInputStream());
             this.dataOut = new DataOutputStream(chatServer.getOutputStream());
             dataOut.writeUTF(gson.toJson(new Message(clientUserName, "", 100, 0, "")));
+            this.flag_busy = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,16 +94,24 @@ public class ClientHandler {
 
             case 200: // start Chat
                 if (message.getChatType() == 0) {
-                    LetsChatClientGui.getInstance().updateMessageView("\n" + message.getSender() + ": " + message.getPayLoad());
+                    LetsChatClientGui.getInstance().updateMessageView("\n" + message.getSender() + ": " + message
+                            .getPayLoad());
                 } else if (message.getChatType() == 1) {
-                    if (LetsChatClientGui.getInstance().warnning(message.getSender() + " wants to chat with you.")) {
-                        dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 201, 1, "")));
-                        Vector v = new Vector();
-                        v.addElement(message.getSender());
-                        LetsChatClientGui.getInstance().updateActiveChat(v);
-                        LetsChatClientGui.getInstance().updateMessageView(message.getSender() + " is Available now.");
-                        ClientHandler.getInstance().setTargetName(message.getSender());
-                        LetsChatClientGui.getInstance().getBtnStartChat().setEnabled(false);
+                    if (!flag_busy) {
+                        if (LetsChatClientGui.getInstance().warnning(message.getSender() + " wants to chat with you" +
+                                                                             ".")) {
+                            dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 201, 1, "")));
+                            Vector v = new Vector();
+                            v.addElement(message.getSender());
+                            LetsChatClientGui.getInstance().updateActiveChat(v);
+                            LetsChatClientGui.getInstance().updateMessageView(message.getSender() + " is Available " +
+                                                                                      "now.");
+                            ClientHandler.getInstance().setTargetName(message.getSender());
+                            LetsChatClientGui.getInstance().getBtnStartChat().setEnabled(false);
+                            flag_busy = true;
+                        } else {
+                            dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 202, 1, "")));
+                        }
                     } else {
                         dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 202, 1, "")));
                     }
@@ -115,6 +125,7 @@ public class ClientHandler {
                 v.addElement(message.getSender());
                 LetsChatClientGui.getInstance().updateActiveChat(v);
                 LetsChatClientGui.getInstance().updateMessageView(message.getSender() + " is Available now.");
+                flag_busy = true;
                 break;
             case 202:
                 JOptionPane.showMessageDialog(null, "Sorry," + message.getSender() + " is busy right now.");
@@ -150,10 +161,12 @@ public class ClientHandler {
         return;
     }
 
-    private boolean createUserInServer(Message message, DataInputStream dataIn, DataOutputStream dataOut) throws IOException {
+    private boolean createUserInServer(Message message, DataInputStream dataIn, DataOutputStream dataOut) throws
+            IOException {
         System.out.println("OpCode: " + message.getOpCode());
         if (message.getOpCode() == 101) {
-            String str = LetsChatClientGui.getInstance().getUsername("Same Username exists in the chat server.\nTo Proceed ,Please enter a new Username: ");
+            String str = LetsChatClientGui.getInstance().getUsername("Same Username exists in the chat server.\nTo " +
+                                                                             "Proceed ,Please enter a new Username: ");
             dataOut.writeUTF(gson.toJson(new Message(str, message.getSender(), 100, 0, "")));
             return createUserInServer(gson.fromJson(dataIn.readUTF(), Message.class), dataIn, dataOut);
         } else if (message.getOpCode() == 110) {
