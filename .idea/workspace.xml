@@ -7,11 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d345d87-f8df-43bf-a4c4-c4ff6d3b9698" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/LetsChatNowClient_jar/LetsChatNowClient.jar" afterPath="$PROJECT_DIR$/out/artifacts/LetsChatNowClient_jar/LetsChatNowClient.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/LetsChatNowServer_jar/LetsChatNowServer.jar" afterPath="$PROJECT_DIR$/out/artifacts/LetsChatNowServer_jar/LetsChatNowServer.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LetsChatNowClient/view/LetsChatClientGui.class" afterPath="$PROJECT_DIR$/out/production/LetsChatNowClient/view/LetsChatClientGui.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/LetsChatNowClient/src/network/FileServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java" afterPath="$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,8 +40,32 @@
       <file leaf-file-name="ServerHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/network/ServerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1598">
-              <caret line="167" column="52" lean-forward="false" selection-start-line="167" selection-start-column="52" selection-end-line="167" selection-end-column="52" />
+            <state relative-caret-position="408">
+              <caret line="46" column="66" lean-forward="false" selection-start-line="46" selection-start-column="66" selection-end-line="46" selection-end-column="66" />
+              <folding>
+                <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+                <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+                <element signature="method#run#0;class#6539:8237" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileServer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/FileServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServerNetwork.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../AnyFileShare/AnyFileShare Server/src/fileServer/network/ServerNetwork.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="22" column="27" lean-forward="false" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -53,14 +74,10 @@
       <file leaf-file-name="LetsChatClientGui.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/view/LetsChatClientGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="391">
               <caret line="36" column="39" lean-forward="false" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#actionPerformed#0;class#2494:3208" expanded="true" />
-                <element signature="method#actionPerformed#0;class#3473:3679" expanded="true" />
-                <element signature="method#actionPerformed#0;class#4629:5008" expanded="true" />
-                <element signature="method#actionPerformed#0;class#5936:6618" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,39 +86,35 @@
       <file leaf-file-name="LetsChatNowClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/LetsChatNowClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
+            <state relative-caret-position="102">
               <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1173">
+              <caret line="115" column="42" lean-forward="false" selection-start-line="115" selection-start-column="42" selection-end-line="115" selection-end-column="42" />
               <folding>
-                <element signature="e#335#336#0" expanded="true" />
-                <element signature="e#428#429#0" expanded="true" />
+                <element signature="method#connectToChatServer#0;class#ClientHandler#0" expanded="true" />
+                <element signature="method#createUserInServer#0;class#ClientHandler#0" expanded="true" />
+                <element signature="method#stopClient#0;class#ClientHandler#0" expanded="true" />
+                <element signature="method#sendMessage#0;class#ClientHandler#0" expanded="true" />
+                <element signature="method#startChat#0;class#ClientHandler#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientHandler.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java">
+      <file leaf-file-name="ClientHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/user/ClientHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="115" column="42" lean-forward="true" selection-start-line="115" selection-start-column="42" selection-end-line="115" selection-end-column="42" />
-              <folding>
-                <element signature="method#connectToChatServer#0;class#ClientHandler#0" expanded="true" />
-                <element signature="method#run#0;class#1659:2162" expanded="true" />
-                <element signature="method#createUserInServer#0;class#ClientHandler#0" expanded="true" />
-                <element signature="e#9266#9267#0" expanded="true" />
-                <element signature="e#9294#9295#0" expanded="true" />
-                <element signature="e#9337#9338#0" expanded="true" />
-                <element signature="e#9371#9372#0" expanded="true" />
-                <element signature="e#9412#9413#0" expanded="true" />
-                <element signature="e#9449#9450#0" expanded="true" />
-                <element signature="e#9509#9510#0" expanded="true" />
-                <element signature="e#9561#9562#0" expanded="true" />
-                <element signature="e#9598#9599#0" expanded="true" />
-                <element signature="e#9631#9632#0" expanded="true" />
-                <element signature="method#stopClient#0;class#ClientHandler#0" expanded="true" />
-                <element signature="method#sendMessage#0;class#ClientHandler#0" expanded="true" />
-                <element signature="method#startChat#0;class#ClientHandler#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="102">
+              <caret line="13" column="26" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,8 +124,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Singleton" />
         <option value="Class" />
+        <option value="Singleton" />
       </list>
     </option>
   </component>
@@ -143,6 +156,7 @@
         <option value="$PROJECT_DIR$/LetsChatNowServer/src/network/ServerHandler.java" />
         <option value="$PROJECT_DIR$/LetsChatNowClient/src/view/LetsChatClientGui.java" />
         <option value="$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java" />
+        <option value="$PROJECT_DIR$/LetsChatNowClient/src/network/FileServer.java" />
       </list>
     </option>
   </component>
@@ -176,6 +190,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -192,6 +210,12 @@
               <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
               <item name="LetsChatNowClient" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="data_model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LetsChatNowClient" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="network" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -200,14 +224,37 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LetsChatNowServer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LetsChatNowServer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LetsChatNowServer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LetsChatNowServer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LetsChatNow" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LetsChatNowServer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -704,12 +751,14 @@
       <workItem from="1498976899996" duration="2482000" />
       <workItem from="1500753564899" duration="60000" />
       <workItem from="1500754912665" duration="118000" />
-      <workItem from="1503769444754" duration="660000" />
+      <workItem from="1503769444754" duration="1058000" />
+      <workItem from="1504033614870" duration="1014000" />
+      <workItem from="1504036572123" duration="5000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46472000" />
+    <option name="totallyTimeSpent" value="47889000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -722,10 +771,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -733,11 +782,11 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22653721" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JSON Viewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19894099" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20499243" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18939394" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -751,6 +800,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -796,45 +846,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1040">
-          <caret line="75" column="17" lean-forward="false" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
-          <folding>
-            <element signature="method#connectToChatServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="method#run#0;class#1659:2162" expanded="true" />
-            <element signature="method#createUserInServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="e#9266#9267#0" expanded="true" />
-            <element signature="e#9294#9295#0" expanded="true" />
-            <element signature="e#9337#9338#0" expanded="true" />
-            <element signature="e#9371#9372#0" expanded="true" />
-            <element signature="e#9412#9413#0" expanded="true" />
-            <element signature="e#9449#9450#0" expanded="true" />
-            <element signature="e#9509#9510#0" expanded="true" />
-            <element signature="e#9561#9562#0" expanded="true" />
-            <element signature="e#9598#9599#0" expanded="true" />
-            <element signature="e#9631#9632#0" expanded="true" />
-            <element signature="method#stopClient#0;class#ClientHandler#0" expanded="true" />
-            <element signature="method#sendMessage#0;class#ClientHandler#0" expanded="true" />
-            <element signature="method#startChat#0;class#ClientHandler#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/view/LetsChatClientGui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="31" column="13" lean-forward="false" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#actionPerformed#0;class#2494:3208" expanded="true" />
-            <element signature="method#actionPerformed#0;class#3473:3679" expanded="true" />
-            <element signature="method#actionPerformed#0;class#4629:5008" expanded="true" />
-            <element signature="method#actionPerformed#0;class#5936:6618" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/LetsChatNowServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -853,10 +864,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="15" column="1" lean-forward="false" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -871,7 +879,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="992">
           <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -879,10 +891,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="15" column="1" lean-forward="false" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -892,18 +901,7 @@
           <caret line="75" column="17" lean-forward="false" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
           <folding>
             <element signature="method#connectToChatServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="method#run#0;class#1659:2162" expanded="true" />
             <element signature="method#createUserInServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="e#9266#9267#0" expanded="true" />
-            <element signature="e#9294#9295#0" expanded="true" />
-            <element signature="e#9337#9338#0" expanded="true" />
-            <element signature="e#9371#9372#0" expanded="true" />
-            <element signature="e#9412#9413#0" expanded="true" />
-            <element signature="e#9449#9450#0" expanded="true" />
-            <element signature="e#9509#9510#0" expanded="true" />
-            <element signature="e#9561#9562#0" expanded="true" />
-            <element signature="e#9598#9599#0" expanded="true" />
-            <element signature="e#9631#9632#0" expanded="true" />
             <element signature="method#stopClient#0;class#ClientHandler#0" expanded="true" />
             <element signature="method#sendMessage#0;class#ClientHandler#0" expanded="true" />
             <element signature="method#startChat#0;class#ClientHandler#0" expanded="true" />
@@ -915,7 +913,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="992">
           <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -925,18 +927,7 @@
           <caret line="75" column="17" lean-forward="true" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
           <folding>
             <element signature="method#connectToChatServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="method#run#0;class#1659:2162" expanded="true" />
             <element signature="method#createUserInServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="e#9266#9267#0" expanded="true" />
-            <element signature="e#9294#9295#0" expanded="true" />
-            <element signature="e#9337#9338#0" expanded="true" />
-            <element signature="e#9371#9372#0" expanded="true" />
-            <element signature="e#9412#9413#0" expanded="true" />
-            <element signature="e#9449#9450#0" expanded="true" />
-            <element signature="e#9509#9510#0" expanded="true" />
-            <element signature="e#9561#9562#0" expanded="true" />
-            <element signature="e#9598#9599#0" expanded="true" />
-            <element signature="e#9631#9632#0" expanded="true" />
             <element signature="method#stopClient#0;class#ClientHandler#0" expanded="true" />
             <element signature="method#sendMessage#0;class#ClientHandler#0" expanded="true" />
             <element signature="method#startChat#0;class#ClientHandler#0" expanded="true" />
@@ -948,10 +939,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="15" column="1" lean-forward="false" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -960,7 +948,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -975,7 +967,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1488">
           <caret line="107" column="44" lean-forward="false" selection-start-line="107" selection-start-column="44" selection-end-line="107" selection-end-column="44" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -983,10 +979,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1022,10 +1015,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1054,7 +1044,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1424">
           <caret line="103" column="33" lean-forward="false" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1069,10 +1063,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1101,7 +1092,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1648">
           <caret line="103" column="33" lean-forward="false" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1116,10 +1111,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1148,7 +1140,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1504">
           <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1162,13 +1158,6 @@
     <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/view/ServerGui.java" />
     <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/view/GuiClient.java" />
     <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/NetManager.java" />
-    <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/user/ClientHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="656">
-          <caret line="62" column="43" lean-forward="false" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/data_model/Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -1191,61 +1180,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/network/ServerHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="167" column="52" lean-forward="false" selection-start-line="167" selection-start-column="52" selection-end-line="167" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/LetsChatNowClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
+        <state relative-caret-position="102">
           <caret line="14" column="31" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-          <folding>
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#428#429#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/view/LetsChatClientGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="391">
           <caret line="36" column="39" lean-forward="false" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#actionPerformed#0;class#2494:3208" expanded="true" />
-            <element signature="method#actionPerformed#0;class#3473:3679" expanded="true" />
-            <element signature="method#actionPerformed#0;class#4629:5008" expanded="true" />
-            <element signature="method#actionPerformed#0;class#5936:6618" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/ClientHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="115" column="42" lean-forward="true" selection-start-line="115" selection-start-column="42" selection-end-line="115" selection-end-column="42" />
+        <state relative-caret-position="1173">
+          <caret line="115" column="42" lean-forward="false" selection-start-line="115" selection-start-column="42" selection-end-line="115" selection-end-column="42" />
           <folding>
             <element signature="method#connectToChatServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="method#run#0;class#1659:2162" expanded="true" />
             <element signature="method#createUserInServer#0;class#ClientHandler#0" expanded="true" />
-            <element signature="e#9266#9267#0" expanded="true" />
-            <element signature="e#9294#9295#0" expanded="true" />
-            <element signature="e#9337#9338#0" expanded="true" />
-            <element signature="e#9371#9372#0" expanded="true" />
-            <element signature="e#9412#9413#0" expanded="true" />
-            <element signature="e#9449#9450#0" expanded="true" />
-            <element signature="e#9509#9510#0" expanded="true" />
-            <element signature="e#9561#9562#0" expanded="true" />
-            <element signature="e#9598#9599#0" expanded="true" />
-            <element signature="e#9631#9632#0" expanded="true" />
             <element signature="method#stopClient#0;class#ClientHandler#0" expanded="true" />
             <element signature="method#sendMessage#0;class#ClientHandler#0" expanded="true" />
             <element signature="method#startChat#0;class#ClientHandler#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/user/ClientHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="13" column="26" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LetsChatNowServer/src/network/ServerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="46" column="66" lean-forward="false" selection-start-line="46" selection-start-column="66" selection-end-line="46" selection-end-column="66" />
+          <folding>
+            <element signature="method#initChatServer#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#decisionMaker#0;class#ServerHandler#0" expanded="true" />
+            <element signature="method#run#0;class#6539:8237" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../AnyFileShare/AnyFileShare Server/src/fileServer/network/ServerNetwork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="22" column="27" lean-forward="false" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LetsChatNowClient/src/network/FileServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1255,7 +1254,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>LetsChatNowClient:jar</last-edited>
+          <last-edited>LetsChatNowServer:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
