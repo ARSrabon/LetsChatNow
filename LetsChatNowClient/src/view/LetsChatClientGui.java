@@ -1,6 +1,7 @@
 package view;
 
 import network.ClientHandler;
+import network.FileServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +34,8 @@ public class LetsChatClientGui extends JFrame {
     private JTextField txtWriteMessage;
     private JLabel lblUserName;
     private JButton btnStartChat;
+    private JButton btnSendFile;
+    private JFileChooser fileChooser;
 
     private LetsChatClientGui() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,9 +78,9 @@ public class LetsChatClientGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = JOptionPane.showInputDialog("Enter your Username:");
                 LetsChatClientGui.getInstance().updateUsername(username);
-                ClientHandler.getInstance().initClient(serverAddress.getText(),Integer.parseInt(serverPort.getText()),username);
+                ClientHandler.getInstance().initClient(serverAddress.getText(), Integer.parseInt(serverPort.getText()), username);
                 ClientHandler.getInstance().connectToChatServer();
-                if(ClientHandler.getInstance().getChatServer().isConnected()){
+                if (ClientHandler.getInstance().getChatServer().isConnected()) {
                     serverAddress.setEnabled(false);
                     serverPort.setEnabled(false);
                     btnConnectToServer.setEnabled(false);
@@ -135,6 +139,22 @@ public class LetsChatClientGui extends JFrame {
         });
         btnHolder.add(btnStartChat);
 
+        btnSendFile = new JButton("Send File");
+//        btnSendFile.setEnabled(ClientHandler.getInstance().isFlag_busy());
+        btnSendFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.showOpenDialog(null);
+                File file = fileChooser.getSelectedFile();
+                FileServer.getInstance().setFile(file);
+
+            }
+        });
+
+        btnHolder.add(btnSendFile);
+
         JPanel chatPanel = new JPanel();
         getContentPane().add(chatPanel, BorderLayout.CENTER);
         chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.X_AXIS));
@@ -152,6 +172,22 @@ public class LetsChatClientGui extends JFrame {
 
         txtWriteMessage = new JTextField();
         txtWriteMessage.setPreferredSize(new Dimension(0, 50));
+        txtWriteMessage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Enter Pressed");
+                if (!txtWriteMessage.getText().equals(null)) {
+                    try {
+                        String msg = txtWriteMessage.getText();
+                        ClientHandler.getInstance().sendMessage(msg);
+                        LetsChatClientGui.getInstance().updateMessageView(ClientHandler.getInstance().getClientUserName() + ": " + msg);
+                        txtWriteMessage.setText("");
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(null, e1);
+                    }
+                }
+            }
+        });
         panel.add(txtWriteMessage);
         txtWriteMessage.setColumns(10);
 
@@ -159,14 +195,14 @@ public class LetsChatClientGui extends JFrame {
         btnSendMessage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!txtWriteMessage.getText().equals(null)){
+                if (!txtWriteMessage.getText().equals(null)) {
                     try {
                         String msg = txtWriteMessage.getText();
                         ClientHandler.getInstance().sendMessage(msg);
-                        LetsChatClientGui.getInstance().updateMessageView(ClientHandler.getInstance().getClientUserName()+": " + msg);
+                        LetsChatClientGui.getInstance().updateMessageView(ClientHandler.getInstance().getClientUserName() + ": " + msg);
                         txtWriteMessage.setText("");
                     } catch (IOException e1) {
-                        JOptionPane.showMessageDialog(null,e1);
+                        JOptionPane.showMessageDialog(null, e1);
                     }
                 }
             }
@@ -196,8 +232,8 @@ public class LetsChatClientGui extends JFrame {
         return JOptionPane.showInputDialog(s);
     }
 
-    public void showMessage(String message, String title){
-        JOptionPane.showMessageDialog(null,message,title,JOptionPane.INFORMATION_MESSAGE);
+    public void showMessage(String message, String title) {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public JList getOnlineUsers() {
@@ -242,6 +278,7 @@ public class LetsChatClientGui extends JFrame {
 //        System.out.println("Here !!!");
         LetsChatClientGui.getInstance().revalidate();
     }
+
     public void updateActiveChat(Vector<String> userList) {
         LetsChatClientGui.getInstance().getActiveChats().setListData(userList);
         LetsChatClientGui.getInstance().revalidate();
@@ -252,7 +289,7 @@ public class LetsChatClientGui extends JFrame {
         int response = JOptionPane.showConfirmDialog(null, s, "Confirm",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
-            JOptionPane.showMessageDialog(null,"No button clicked");
+            JOptionPane.showMessageDialog(null, "No button clicked");
         } else if (response == JOptionPane.YES_OPTION) {
             return true;
         } else if (response == JOptionPane.CLOSED_OPTION) {

@@ -99,13 +99,13 @@ public class ClientHandler {
                 } else if (message.getChatType() == 1) {
                     if (!flag_busy) {
                         if (LetsChatClientGui.getInstance().warnning(message.getSender() + " wants to chat with you" +
-                                                                             ".")) {
+                                ".")) {
                             dataOut.writeUTF(gson.toJson(new Message(clientUserName, message.getSender(), 201, 1, "")));
                             Vector v = new Vector();
                             v.addElement(message.getSender());
                             LetsChatClientGui.getInstance().updateActiveChat(v);
                             LetsChatClientGui.getInstance().updateMessageView(message.getSender() + " is Available " +
-                                                                                      "now.");
+                                    "now.");
                             ClientHandler.getInstance().setTargetName(message.getSender());
                             LetsChatClientGui.getInstance().getBtnStartChat().setEnabled(false);
                             flag_busy = true;
@@ -133,6 +133,10 @@ public class ClientHandler {
                 break;
             case 210:
                 LetsChatClientGui.getInstance().updateMessageView(message.getSender() + ": " + message.getPayLoad());
+                break;
+            case 215:
+                break;
+            case 216:
                 break;
             case 300: // get Online users list.
                 new Thread(new Runnable() {
@@ -166,7 +170,7 @@ public class ClientHandler {
         System.out.println("OpCode: " + message.getOpCode());
         if (message.getOpCode() == 101) {
             String str = LetsChatClientGui.getInstance().getUsername("Same Username exists in the chat server.\nTo " +
-                                                                             "Proceed ,Please enter a new Username: ");
+                    "Proceed ,Please enter a new Username: ");
             dataOut.writeUTF(gson.toJson(new Message(str, message.getSender(), 100, 0, "")));
             return createUserInServer(gson.fromJson(dataIn.readUTF(), Message.class), dataIn, dataOut);
         } else if (message.getOpCode() == 110) {
@@ -251,10 +255,18 @@ public class ClientHandler {
         this.targetName = targetName;
     }
 
+    public boolean isFlag_busy() {
+        return flag_busy;
+    }
+
+    public void setFlag_busy(boolean flag_busy) {
+        this.flag_busy = flag_busy;
+    }
+
     public void stopClient() {
         try {
             error = true;
-            if (ClientHandler.getInstance().getChatServer().isConnected()) {
+            if (ClientHandler.getInstance().getChatServer() != null) {
                 ClientHandler.getInstance().getChatServer().close();
             }
             System.exit(1);
@@ -265,6 +277,14 @@ public class ClientHandler {
 
     public void sendMessage(String msg) throws IOException {
         dataOut.writeUTF(gson.toJson(new Message(clientUserName, targetName, 210, 1, msg)));
+    }
+
+    public void sendFileRequest(String fileName) throws IOException {
+        dataOut.writeUTF(gson.toJson(new Message(clientUserName, targetName, 215, 1, fileName)));
+    }
+
+    public void sendFileAccept() throws IOException {
+        dataOut.writeUTF(gson.toJson(new Message(clientUserName, targetName, 216, 1, "")));
     }
 
     public void startChat(String targetUser) throws IOException {

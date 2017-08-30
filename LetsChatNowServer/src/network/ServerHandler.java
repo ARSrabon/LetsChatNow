@@ -139,13 +139,13 @@ public class ServerHandler {
                 }
                 break;
             case 210:
-                if (message.getChatType() == 0) {
-                    LetsChatServerGui.getInstance().updateConsole("\n" + message.getSender() + ": " + message.getPayLoad());
-                } else if (message.getChatType() == 1) {
-                    ClientHandler handler = clientHandlerMap.get(message.getReceiver());
-                    handler.getDataOut().writeUTF(gson.toJson(new Message(message.getSender(), message.getReceiver(),
-                            210, 1, message.getPayLoad())));
-                }
+                relayMessage(message);
+                break;
+            case 215:
+                relayMessage(message);
+                break;
+            case 216:
+                relayMessage(message);
                 break;
             case 300: // get list of online users.
                 new Thread(new Runnable() {
@@ -181,6 +181,16 @@ public class ServerHandler {
             default:
                 break;
 
+        }
+    }
+
+    public void relayMessage(Message message) throws IOException {
+        if (message.getChatType() == 0) {
+            LetsChatServerGui.getInstance().updateConsole("\n" + message.getSender() + ": " + message.getPayLoad());
+        } else if (message.getChatType() == 1) {
+            ClientHandler handler = clientHandlerMap.get(message.getReceiver());
+            handler.getDataOut().writeUTF(gson.toJson(new Message(message.getSender(), message.getReceiver(),
+                    message.getOpCode(), 1, message.getPayLoad())));
         }
     }
 
